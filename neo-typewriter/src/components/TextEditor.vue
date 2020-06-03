@@ -122,8 +122,34 @@
         </v-col>
       </v-row>
 
-    </div>
+      <div v-if="backupHTML">
+        <p v-html="backupHTML"></p>
+        <v-btn @click="clearLocalStorage" color="primary">Clear local storage</v-btn>
+      </div>
 
+    </div>
+    <!-- /editor -->
+
+    <!-- <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="500px"
+      transition="dialog-transition"
+    >
+      <v-card>
+        <v-card-title class="yellow" primary-title>
+          There is unsaved work in your local storage.
+        </v-card-title>
+        <v-card-text>
+
+          <p class="pa-3 blue--text" v-html="backupHTML"></p>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="clearLocalStorage" color="red">Clear local storage</v-btn>
+
+        </v-card-actions>
+      </v-card>
+    </v-dialog> -->
 
 
   </div>
@@ -157,6 +183,8 @@ export default {
   },
   data() {
     return {
+      dialog: false,
+      saveInterval: null,
       editor: new Editor({
         extensions: [
           new Blockquote(),
@@ -179,10 +207,7 @@ export default {
         ],
         content: `
           <p>
-            Wake up, Neo...
-          </p>
-          <p>
-            It's time to start your novel.
+            start typing Neo...
           </p>
         `,
         onUpdate: ({ getJSON, getHTML }) => {
@@ -192,6 +217,7 @@ export default {
       }),
       json: 'Update content to see changes',
       html: 'Update content to see changes',
+      backupHTML: ''
     }
   },
   methods: {
@@ -215,7 +241,34 @@ export default {
       this.editor.clearContent(true)
       this.editor.focus()
     },
+    clearLocalStorage() {
+      localStorage.removeItem("Neo-typewriter-text")
+      this.backupHTML = ''
+      this.dialog = false
+      let saveInterval = setInterval( () => {
+        localStorage.setItem("Neo-typewriter-text", this.html)
+        console.log('saving text')
+      }, 10000)
+      saveInterval
+    }
   },
+  // created() {
+  //   if(localStorage.getItem('Neo-typewriter-text') === "Update content to see changes" || localStorage.getItem('Neo-typewriter-text') === null) {
+  //     let saveInterval = setInterval( () => {
+  //       localStorage.setItem("Neo-typewriter-text", this.html)
+  //       console.log('saving text')
+  //     }, 10000)
+  //     saveInterval
+  //   } else {
+  //     this.backupHTML = localStorage.getItem('Neo-typewriter-text')
+  //     this.dialog = true
+  //   }
+  //
+  // },
+  // beforeDestroy() {
+  //   clearInterval(this.saveInterval)
+  //   localStorage.removeItem("Neo-typewriter-text");
+  // }
 }
 </script>
 

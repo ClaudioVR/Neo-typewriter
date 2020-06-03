@@ -34,7 +34,12 @@
       <v-app-bar-nav-icon color="green" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     </v-app-bar> -->
 
-    <router-view></router-view>
+    <transition
+      name="fade"
+      mode="in-out"
+    >
+      <router-view/>
+    </transition>
 
     <!-- <v-content>
       <HelloWorld/>
@@ -57,3 +62,16 @@ export default {
   }),
 };
 </script>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .5s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+</style>
