@@ -1,7 +1,7 @@
 <template>
   <div class="screen black">
     <v-container class="">
-      <div id="title" class="text-center">#3ab508 Neo typer</div>
+      <div id="title" class="text-center">#3ab508 NeoTyper</div>
       <div id="subtitle" class="text-center">your mindfulness online typer</div>
 
       <TextEditor class="mt-5" />
