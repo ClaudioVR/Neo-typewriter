@@ -1,7 +1,7 @@
 <template>
   <div class="home black">
     <vue-typer
-      :text='["Wake up, Neo...", "Are you ready to write your novel?"]'
+      :text='["Wake up, Neo...", "It is time to write..."]'
       :repeat='0'
       :shuffle='false'
       initial-action='typing'
@@ -28,9 +28,10 @@ export default {
     }
   },
   created() {
+    console.log(window.innerWidth)
     setTimeout( () => {
       this.$router.push('/neo')
-    }, 14500)
+    }, 12500)
   }
 }
 </script>
@@ -38,12 +39,21 @@ export default {
 <style lang="css">
 .home {
   height: 100vh;
-  padding: 100px 200px;
-  font-family: 'Source Code Pro', monospace !important;
-
+  /* font-family: 'Source Code Pro', monospace !important; */
+  font-family: 'Press Start 2P', cursive !important;
+  padding: 50px 30px;
 }
 .vue-typer .custom.char.typed {
   color: #3ab508;
-  font-size: 2rem;
+  font-size: .7rem;
+}
+
+@media only screen and (min-width: 700px) {
+  .home {
+    padding: 60px;
+  }
+  .vue-typer .custom.char.typed {
+    font-size: 1.5rem !important;
+  }
 }
 </style>
